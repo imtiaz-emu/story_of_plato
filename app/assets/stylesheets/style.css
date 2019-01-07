@@ -131,7 +131,7 @@ table tr th {
 
 .login-img-body {
 
-    background: image-url('bg-1.jpeg') no-repeat center center fixed;
+    background: url('/assets/bg-1.jpeg') no-repeat center center fixed;
 
     -webkit-background-size: cover;
 
@@ -145,7 +145,7 @@ table tr th {
 
 .login-img2-body {
 
-    background: image-url('bg-1.jpeg') no-repeat center center fixed;
+    background: url('/assets/bg-1.jpeg') no-repeat center center fixed;
 
     -webkit-background-size: cover;
 
@@ -159,7 +159,7 @@ table tr th {
 
 .login-img3-body {
 
-    background: image-url('bg-1.jpeg') no-repeat center center fixed;
+    background: url('/assets/bg-1.jpeg') no-repeat center center fixed;
 
     -webkit-background-size: cover;
 

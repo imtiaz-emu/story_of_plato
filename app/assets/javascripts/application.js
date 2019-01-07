@@ -12,9 +12,9 @@
 //
 //= require rails-ujs
 //= require jquery
+//= require turbolinks
 //= require bootstrap.min
 //= require activestorage
-//= require turbolinks
 //= require jquery.nicescroll
 //= require jquery.scrollTo.min
 //= require scripts

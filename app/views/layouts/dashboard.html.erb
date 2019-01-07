@@ -16,9 +16,17 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body class="login-img3-body">
-    <div class="container">
-      <%= yield %>
-    </div>
+  <body>
+  <section id="container" class="">
+    <%= render partial: 'shared/header' %>
+    <%= render partial: 'shared/sidebar' %>
+
+    <section id="main-content">
+      <section class="wrapper">
+        <%= yield %>
+      </section>
+    </section>
+
+  </section>
   </body>
 </html>

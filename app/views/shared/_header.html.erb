@@ -14,7 +14,7 @@
 
       <li class="dropdown">
         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-          <span class="username">Jenifer Smith</span>
+          <span class="username"><%= current_user.email %></span>
           <b class="caret"></b>
         </a>
         <ul class="dropdown-menu extended logout">
@@ -23,7 +23,9 @@
             <a href="#"><i class="fa fa-user-md"></i> My Profile</a>
           </li>
           <li>
-            <a href="#"><i class="fa fa-sign-out"></i> Logout</a>
+            <%= link_to destroy_user_session_path, method: :delete do %>
+                <i class="fa fa-sign-out"></i> Logout
+            <% end %>
           </li>
         </ul>
       </li>

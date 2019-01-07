@@ -1,0 +1,28 @@
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: "login-form"}) do |f| %>
+    <%= devise_error_messages! %>
+    <% flash.each do |key, value| %>
+        <div class="alert-danger <%= key %>"><%= value %></div>
+    <% end %>
+    <div class="login-wrap">
+      <p class="login-img"><i class="fa fa-lock"></i></p>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: 'Email' %>
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+        <%= f.password_field :password, autofocus: false, autocomplete: "current-password", class: 'form-control', placeholder: 'Password' %>
+      </div>
+
+      <% if devise_mapping.rememberable? -%>
+          <label class="checkbox">
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me %>
+            <span class="pull-right"> <a href="#"> Forgot Password?</a></span>
+          </label>
+      <% end -%>
+
+      <%= f.submit "Log in", class: 'btn btn-primary btn-lg btn-block' %>
+      <%= render "devise/shared/links" %>
+    </div>
+<% end %>

@@ -16,5 +16,6 @@
  *= require widgets
  *= require style
  *= require style-responsive
+ *= require custom
  *= require_self
  */
