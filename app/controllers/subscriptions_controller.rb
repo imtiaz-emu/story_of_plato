@@ -1,6 +1,8 @@
 class SubscriptionsController < ApplicationController
   before_action :set_subscription, only: [:show, :edit, :update, :destroy]
 
+  layout 'dashboard'
+
   # GET /subscriptions
   # GET /subscriptions.json
   def index
@@ -62,13 +64,13 @@ class SubscriptionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_subscription
-      @subscription = Subscription.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_subscription
+    @subscription = Subscription.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def subscription_params
-      params.fetch(:subscription, {})
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def subscription_params
+    params.require(:subscription).permit(:plan_subscriber_id, :plan_subscriber_type, :plan_id, :duration_type, :duration)
+  end
 end

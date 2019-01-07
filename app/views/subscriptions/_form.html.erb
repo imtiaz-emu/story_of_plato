@@ -1,17 +1,90 @@
-<%= form_with(model: subscription, local: true) do |form| %>
-  <% if subscription.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(subscription.errors.count, "error") %> prohibited this subscription from being saved:</h2>
+<div class="row">
+  <div class="col-md-12">
+    <section class="panel">
+      <header class="panel-heading">
+        New Subscription
+      </header>
+      <div class="panel-body">
+        <%= form_with(model: subscription, local: true) do |f| %>
 
-      <ul>
-      <% subscription.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+            <%= render partial: 'shared/errors', locals: {obj: subscription} %>
 
-  <div class="actions">
-    <%= form.submit %>
+            <div class="subscriber-radios radios">
+              <p><b>Manage Subscriptions for User/Organization</b></p>
+
+              <%= f.label :plan_subscriber_type do %>
+                  <%= f.radio_button :plan_subscriber_type, 'User', id: "radio-01", value: 'User' %> <%= current_user.email %>
+              <% end %>
+              <% if current_user_organizations.count > 0 %>
+                  <%= f.label :plan_subscriber_type do %>
+                      <%= f.radio_button :plan_subscriber_type, 'Organization', id: "radio-02", value: 'Organization' %>
+                      Organization
+                  <% end %>
+                  <p>Select subscriber organization</p>
+                  <%= f.select :plan_subscriber_id, options_for_select(current_user_organizations.collect { |org| [org.name, org.id] }, :selected => subscription.plan_subscriber_id), :class => "form-control" %>
+              <% end %>
+            </div>
+
+            <div class="plan-radios radios">
+              <p><b>Select Subscription Package</b></p>
+              <div class="row">
+                <% active_plans.each do |plan| %>
+                    <div class="col-md-3">
+                      <%= f.label :plan_id do %>
+                          <%= f.radio_button :plan_id, "#{plan.id}", id: "radio-#{plan.plan_type}", value: "#{plan.id}" %> <%= plan.plan_type.capitalize %>
+                      <% end %>
+
+                      <blockquote>
+                        <% if plan.plan_type == 'solo' %>
+                            <p>Monthly Price: $<%= plan.monthly_price %></p>
+                            <p>Number of Users: <%= plan.no_of_users %></p>
+                            <p>Number of Projects: 1</p>
+                        <% else %>
+                            <p>Annual Price: $<%= plan.annual_price %></p>
+                            <p>Monthly Price: $<%= plan.monthly_price %></p>
+                            <p>Number of Users: <%= plan.no_of_users %></p>
+                            <p>Unlimited Projects: <%= plan.unlimited_boards ? 'Yes' : 'No' %></p>
+                            <p>Additional User: $<%= plan.additional_user %></p>
+                        <% end %>
+                      </blockquote>
+                    </div>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="subscribe-duration-radios radios">
+              <p><b>Manage Subscription Duration</b></p>
+
+              <%= f.label :duration_type do %>
+                  <%= f.radio_button :duration_type, 'Monthly', id: "radio-03", value: 'Monthly', checked: true %>
+                  Monthly
+              <% end %>
+              <%= f.label :duration_type do %>
+                  <%= f.radio_button :duration_type, 'Annually', id: "radio-04", value: 'Annually' %> Annually
+              <% end %>
+
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-3">
+                  <%= f.number_field :duration, class: 'form-control', min: 1 %>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-10">
+                <button type="submit" class="btn btn-success">
+                  <%= subscription.new_record? ? 'New subscription' : 'Update subscription' %>
+                </button>
+                <%= link_to 'Cancel', subscription.new_record? ? subscriptions_path :
+                    subscription_path(subscription), class: 'btn btn-primary' %>
+              </div>
+            </div>
+        <% end %>
+      </div>
+
+    </section>
   </div>
-<% end %>
+</div>

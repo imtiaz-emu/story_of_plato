@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2019_01_07_100132) do
     t.integer "no_of_users", default: 1
     t.boolean "unlimited_boards", default: false
     t.boolean "active", default: true
-    t.string "type"
+    t.string "plan_type"
     t.float "monthly_price", default: 0.0
     t.float "annual_price", default: 0.0
     t.float "additional_user", default: 0.0

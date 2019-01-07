@@ -18,4 +18,5 @@
 //= require jquery.nicescroll
 //= require jquery.scrollTo.min
 //= require scripts
+//= require custom
 //= require_self

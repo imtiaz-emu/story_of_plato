@@ -29,7 +29,8 @@ class OrganizationsController < ApplicationController
   # POST /organizations
   # POST /organizations.json
   def create
-    @organization = current_user.organizations.new(organization_params)
+    @organization = Organization.new(organization_params)
+    @organization.owner = current_user
 
     respond_to do |format|
       if @organization.save
