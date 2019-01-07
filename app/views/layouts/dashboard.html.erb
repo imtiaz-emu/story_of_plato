@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Plato - A Simple Trello like project management software">
-    <meta name="author" content="Imtiaz Hossain Emu">
-    <meta name="keyword" content="Plato, Project Management, Organization, Rails, Bootstrap, Responsive, Ruby">
-    <%= favicon_link_tag asset_path('favicon.ico') %>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plato - A Simple Trello like project management software">
+  <meta name="author" content="Imtiaz Hossain Emu">
+  <meta name="keyword" content="Plato, Project Management, Organization, Rails, Bootstrap, Responsive, Ruby">
+  <%= favicon_link_tag asset_path('favicon.ico') %>
 
-    <title>StoryOfPlato</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+  <title>StoryOfPlato</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
-  <body>
-  <section id="container" class="">
-    <%= render partial: 'shared/header' %>
-    <%= render partial: 'shared/sidebar' %>
+<body>
+<section id="container" class="">
+  <%= render partial: 'shared/header' %>
+  <%= render partial: 'shared/sidebar' %>
 
-    <section id="main-content">
-      <section class="wrapper">
-        <%= yield %>
-      </section>
+  <section id="main-content">
+    <section class="wrapper">
+      <% flash.each do |key, value| %>
+          <div class="alert alert-<%= key %> alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <%= value %>
+          </div>
+      <% end %>
+      <%= yield %>
     </section>
-
   </section>
-  </body>
+
+</section>
+</body>
 </html>

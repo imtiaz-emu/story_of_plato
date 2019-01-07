@@ -1,5 +1,5 @@
 class OrganizationsController < ApplicationController
-  before_action :set_organization, only: [:show, :edit, :update, :destroy]
+  before_action :set_organization, only: [:show, :edit, :update, :destroy, :add_user]
 
   layout 'dashboard'
 
@@ -7,11 +7,14 @@ class OrganizationsController < ApplicationController
   # GET /organizations.json
   def index
     @organizations = current_user.organizations
+    @owned_orgs = Organization.owned_organizations(current_user.id).includes(:users)
   end
 
   # GET /organizations/1
   # GET /organizations/1.json
   def show
+    @owner = @organization.owner
+    @org_users = @organization.users
   end
 
   # GET /organizations/new
@@ -60,6 +63,23 @@ class OrganizationsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to organizations_url, notice: 'Organization was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def add_user
+    user = User.find_by_email(params[:email])
+    if user
+      if (@organization.owner == user) || (@organization.users.include?(user))
+        flash[:info] = "User Already Exists!"
+        redirect_to organization_path(@organization)
+      else
+        @organization.users << user
+        flash[:success] = "User #{params[:email]} added to #{@organization.name}"
+        redirect_to organization_path(@organization)
+      end
+    else
+      flash[:danger] = "User #{params[:email]} not found!"
+      redirect_to organization_path(@organization)
     end
   end
 

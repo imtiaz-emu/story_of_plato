@@ -22,12 +22,12 @@
         </tr>
         </thead>
         <tbody>
-        <% @organizations.each do |org| %>
+        <% @owned_orgs.each do |org| %>
             <tr>
               <td><%= link_to org.id, organization_path(org) %></td>
               <td><%= org.name %></td>
               <td><%= truncate(org.try(:description) || "", :length => 50) %></td>
-              <td>4</td>
+              <td><%= org.users.count + 1 %></td>
               <td><%= link_to 'Show', org %></td>
               <td><%= link_to 'Edit', edit_organization_path(org) %></td>
               <td><%= link_to 'Destroy', org, method: :delete, data: { confirm: 'Are you sure?' } %></td>
