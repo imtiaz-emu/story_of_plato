@@ -1,0 +1,78 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row m-bot20">
+  <div class="col-lg-6">
+    <%= link_to 'Edit', edit_organization_path(@organization) %> |
+    <%= link_to 'Back', organizations_path %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+            <%= @organization.name %>
+          </a>
+        </h4>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse in">
+        <div class="panel-body">
+          <%= @organization.description %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    Add Users to ORG
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6 col-md-12">
+    <section class="panel">
+      <header class="panel-heading">
+        Organization Users
+      </header>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Email</th>
+          <th>Added Date</th>
+          <th>Number of Projects</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>1</td>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td colspan="2">Larry the Bird</td>
+          <td>@twitter</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Sumon</td>
+          <td>Mosa</td>
+          <td>@twitter</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</div>
+
+
