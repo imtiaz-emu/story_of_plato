@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_07_070404) do
+ActiveRecord::Schema.define(version: 2019_01_07_093611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,18 @@ ActiveRecord::Schema.define(version: 2019_01_07_070404) do
     t.bigint "organization_id", null: false
     t.bigint "user_id", null: false
     t.index ["organization_id", "user_id"], name: "index_organizations_users_on_organization_id_and_user_id"
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.integer "no_of_users", default: 1
+    t.boolean "unlimited_boards", default: false
+    t.boolean "active", default: true
+    t.string "type"
+    t.float "monthly_price", default: 0.0
+    t.float "annual_price", default: 0.0
+    t.float "additional_user", default: 0.0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

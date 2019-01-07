@@ -4,3 +4,8 @@
 .login-img3-body .login-form{
     margin: 150px auto 0;
 }
+.alert-notice {
+    background-color: #dff8e3;
+    border-color: #caf4ca;
+    color: #4cd964;
+}
