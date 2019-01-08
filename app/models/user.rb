@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :organizations, foreign_key: :created_by, dependent: :destroy
   has_and_belongs_to_many :organizations
   has_many :subscriptions, as: :plan_subscriber
+  has_many :projects, as: :creator
 
 
   def self.from_omniauth(auth)

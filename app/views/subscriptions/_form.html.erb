@@ -68,8 +68,7 @@
             <div class="form-group">
               <div class="row">
                 <div class="col-md-3">
-                  <%= f.number_field :duration, class: 'form-control', min: 1, required: true %>
-                  <small>In months</small>
+                  <%= f.number_field :duration, class: 'form-control', min: 1, required: true, value: subscription_duration(subscription) %>
                 </div>
               </div>
             </div>

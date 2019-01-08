@@ -1,13 +1,12 @@
 class Subscription < ApplicationRecord
 
-  attr_accessor :duration_type
-
   belongs_to :plan_subscriber, polymorphic: true
   belongs_to :plan
+  belongs_to :project, optional: true
 
   after_validation :set_expiray_and_cost
   before_save :check_if_subscription_exists
-  # after_create :create_project, if: -> (subscription){subscription.plan.plan_type == 'solo' }
+  after_create :create_project, if: -> (subscription){subscription.plan.plan_type == 'solo' }
 
   private
   def set_expiray_and_cost
@@ -29,7 +28,7 @@ class Subscription < ApplicationRecord
   end
 
   def create_project
-    # TODO: Create default project for solo plan
+    self.plan_subscriber.projects.create(name: 'Default Project')
   end
 
 end
