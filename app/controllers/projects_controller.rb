@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:details, :users, :cards, :update, :destroy]
 
   layout 'dashboard'
 
@@ -11,7 +11,12 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   # GET /projects/1.json
-  def show
+  def details
+    if @project.creator.is_a?(User)
+      @project_owner = @project.creator == current_user
+    else
+      @project_owner = Organization.owned_organizations(current_user.id).include?(@project.creator)
+    end
   end
 
   # GET /projects/new
@@ -20,7 +25,21 @@ class ProjectsController < ApplicationController
   end
 
   # GET /projects/1/edit
-  def edit
+  def users
+    @project_users = @project.creator.projects.map {|p| p.users}.compact.uniq
+    if Plan.find_by_plan_type('solo').subscriptions.not_expired.map {|sub| sub.project}.compact.include?(@project)
+      @can_add_user = false
+    end
+
+    if Plan.where('plan_type != ?', 'solo').map{|p| p.subscriptions.not_expired}.compact.map {|sub| sub.project}.compact.include?(@project)
+      @can_add_user = true
+    end
+
+    # if @project.creator.is_a?(Organization)
+    #   @project.creator.subscriptions.not_expired.includes(:plan).last.plan.no_of_users
+    # else
+    #   @project.creator.subscriptions.not_expired.includes(:plan)
+    # end
   end
 
   # POST /projects
@@ -30,8 +49,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to @project, notice: 'Project was successfully created.' }
-        format.json { render :show, status: :created, location: @project }
+        format.html { redirect_to details_project_path(@project), notice: 'Project was successfully created.' }
       else
         format.html { render :new }
         format.json { render json: @project.errors, status: :unprocessable_entity }
@@ -44,10 +62,9 @@ class ProjectsController < ApplicationController
   def update
     respond_to do |format|
       if @project.update(project_params)
-        format.html { redirect_to @project, notice: 'Project was successfully updated.' }
-        format.json { render :show, status: :ok, location: @project }
+        format.html { redirect_to details_project_path(@project), notice: 'Project was successfully updated.' }
       else
-        format.html { render :edit }
+        format.html { render :users }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end

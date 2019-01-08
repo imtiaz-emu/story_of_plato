@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-lg-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+            <%= @project.name %>
+          </a>
+        </h4>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse in">
+        <div class="panel-body">
+          <%= @project.creator.is_a?(Organization) ? @project.creator.name : @project.creator.email %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <section class="panel">
+      <header class="panel-heading">
+        Add Users to <%= @project.name %>
+      </header>
+      <div class="panel-body">
+        <%= form_for @project, :url => add_user_project_path, method: 'POST', class: 'form-inline' do %>
+            <div class="form-group">
+              <input type="email" name="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
+            </div>
+            <button type="submit" class="btn btn-success">Add User</button>
+        <% end %>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6 col-md-12">
+    <section class="panel">
+      <header class="panel-heading">
+        Project Users
+      </header>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @project.users.each do |user| %>
+            <tr>
+              <td><%= user.id %></td>
+              <td><%= user.email %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</div>

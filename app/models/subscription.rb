@@ -30,7 +30,8 @@ class Subscription < ApplicationRecord
   end
 
   def create_project
-    self.plan_subscriber.projects.create(name: 'Default Project')
+    project = self.plan_subscriber.projects.create(name: 'Default Project')
+    self.project << project
   end
 
 end

@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Project Details</div>
+      <div class="panel-content">
+        <div class="profile-widget profile-widget-info">
+          <div class="panel-body">
+            <div class="col-lg-2 col-sm-2">
+              <h6>Project Name</h6>
+              <h4><%= @project.name %></h4>
+            </div>
+            <div class="col-lg-4 col-sm-4 follow-info">
+              <blockquote>
+                <p>Project Owner: <%= @project.creator.is_a?(Organization) ? @project.creator.name : @project.creator.email %></p>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to 'Back', projects_path, class: 'btn btn-default' %>
+
+<% if @project_owner %>
+    <a href="#projectForm" data-toggle="modal" class="btn btn-primary">
+      Edit Project
+    </a>
+    <%= render partial: 'shared/project_form', locals: {project: @project, creator: @project.creator} %>
+<% end %>

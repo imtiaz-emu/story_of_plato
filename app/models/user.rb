@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_and_belongs_to_many :organizations
   has_many :subscriptions, as: :plan_subscriber
   has_many :projects, as: :creator
+  has_many :project_users
+  has_many :projects, through: :project_users
 
 
   def self.from_omniauth(auth)
