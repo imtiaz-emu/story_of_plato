@@ -21,7 +21,7 @@ class Subscription < ApplicationRecord
   end
 
   def check_if_subscription_exists
-    if self.plan_subscriber.is_a?(Organization) && Subscription.find_by_plan_subscriber_id(self.plan_subscriber_id)
+    if self.plan_subscriber.is_a?(Organization) && self.plan_subscriber.subscriptions.count > 0
       errors.add(:base, "You've already bought a subscription for this organization!")
       throw(:abort)
     end

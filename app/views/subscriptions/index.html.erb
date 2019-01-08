@@ -1,23 +1,29 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <% @user_subscriptions.each do |u_sub| %>
+      <%= link_to u_sub do %>
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="info-box blue-bg">
+              <%= u_sub.plan_subscriber.is_a?(Organization) ? u_sub.plan_subscriber.name : u_sub.plan_subscriber.email %>
+              <div class="count"><%= u_sub.plan.plan_type.capitalize() %></div>
+              <div class="title">Expired: <%= u_sub.end_date.strftime('%m/%d/%Y') %></div>
+            </div><!--/.info-box-->
+          </div>
+      <% end %>
+  <% end %>
+</div>
 
-<h1>Subscriptions</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @subscriptions.each do |subscription| %>
-      <tr>
-        <td><%= link_to 'Show', subscription %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
+<div class="row">
+  <% @org_subscriptions.each do |o_sub| %>
+      <%= link_to o_sub do %>
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="info-box blue-bg">
+              <%= o_sub.plan_subscriber.is_a?(Organization) ? o_sub.plan_subscriber.name : o_sub.plan_subscriber.email %>
+              <div class="count"><%= o_sub.plan.plan_type.capitalize() %></div>
+              <div class="title">Expired: <%= o_sub.end_date.strftime('%m/%d/%Y') %></div>
+            </div><!--/.info-box-->
+          </div>
+      <% end %>
+  <% end %>
+</div>
 
 <%= link_to 'New Subscription', new_subscription_path %>

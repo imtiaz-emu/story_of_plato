@@ -6,7 +6,9 @@ class SubscriptionsController < ApplicationController
   # GET /subscriptions
   # GET /subscriptions.json
   def index
-    @subscriptions = Subscription.all
+    @user_subscriptions = current_user.subscriptions
+    @org_subscriptions = Subscription.where(plan_subscriber_type: 'Organization').includes(:plan_subscriber, :plan)
+                             .map {|sub| sub if sub.plan_subscriber.created_by == current_user.id}
   end
 
   # GET /subscriptions/1
@@ -66,7 +68,7 @@ class SubscriptionsController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_subscription
-    @subscription = Subscription.includes(:plan).find(params[:id])
+    @subscription = Subscription.includes(:plan, :plan_subscriber).find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

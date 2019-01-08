@@ -2,7 +2,39 @@
   <div class="col-md-12">
     <div class="panel panel-primary">
       <div class="panel-heading">Panel heading</div>
-      <div class="panel-content">Panel content</div>
+      <div class="panel-content">
+        <div class="profile-widget profile-widget-info">
+          <div class="panel-body">
+            <div class="col-lg-2 col-sm-2">
+              <h6>Subscriber</h6>
+              <h4><%= @subscription.plan_subscriber.is_a?(Organization) ? @subscription.plan_subscriber.name : @subscription.plan_subscriber.email %></h4>
+            </div>
+            <div class="col-lg-4 col-sm-4 follow-info">
+              <p><%= @subscription.plan.plan_type.capitalize() %></p>
+              <blockquote>
+                <% if @subscription.plan.plan_type == 'solo' %>
+                    <p>Monthly Price: $<%= @subscription.plan.monthly_price %></p>
+                    <p>Number of Users: <%= @subscription.plan.no_of_users %></p>
+                    <p>Number of Projects: 1</p>
+                <% else %>
+                    <p>Annual Price: $<%= @subscription.plan.annual_price %></p>
+                    <p>Monthly Price: $<%= @subscription.plan.monthly_price %></p>
+                    <p>Number of Users: <%= @subscription.plan.no_of_users %></p>
+                    <p>Unlimited Projects: <%= @subscription.plan.unlimited_boards ? 'Yes' : 'No' %></p>
+                    <p>Additional User: $<%= @subscription.plan.additional_user %></p>
+                <% end %>
+              </blockquote>
+            </div>
+            <div class="col-lg-4 col-sm-6 follow-info weather-category">
+              <h4>
+                <p>Started: <%= @subscription.start_date.strftime('%m/%d/%Y') %></p>
+                <p>Expired: <%= @subscription.end_date.strftime('%m/%d/%Y') %></p>
+                <p>Cost: <%= @subscription.total_cost %></p>
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
