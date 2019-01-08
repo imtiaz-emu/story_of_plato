@@ -13,7 +13,7 @@
               <p><b>Manage Subscriptions for User/Organization</b></p>
 
               <%= f.label :plan_subscriber_type do %>
-                  <%= f.radio_button :plan_subscriber_type, 'User', id: "radio-01", value: 'User' %> <%= current_user.email %>
+                  <%= f.radio_button :plan_subscriber_type, 'User', id: "radio-01", value: 'User', checked: true %> <%= current_user.email %>
               <% end %>
               <% if current_user_organizations.count > 0 %>
                   <%= f.label :plan_subscriber_type do %>
@@ -31,7 +31,7 @@
                 <% active_plans.each do |plan| %>
                     <div class="col-md-3">
                       <%= f.label :plan_id do %>
-                          <%= f.radio_button :plan_id, "#{plan.id}", id: "radio-#{plan.plan_type}", value: "#{plan.id}" %> <%= plan.plan_type.capitalize %>
+                          <%= f.radio_button :plan_id, "#{plan.id}", id: "radio-#{plan.plan_type}", value: "#{plan.id}", :checked => subscription.plan_id.present? ? subscription.plan_id == plan.id : true %> <%= plan.plan_type.capitalize %>
                       <% end %>
 
                       <blockquote>
@@ -68,7 +68,8 @@
             <div class="form-group">
               <div class="row">
                 <div class="col-md-3">
-                  <%= f.number_field :duration, class: 'form-control', min: 1 %>
+                  <%= f.number_field :duration, class: 'form-control', min: 1, required: true %>
+                  <small>In months</small>
                 </div>
               </div>
             </div>

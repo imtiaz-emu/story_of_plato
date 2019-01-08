@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :subscriptions
+  resources :subscriptions, except: [:update, :destroy, :edit]
 
   root 'dashboard#index'
 

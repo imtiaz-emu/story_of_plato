@@ -30,8 +30,8 @@ class SubscriptionsController < ApplicationController
 
     respond_to do |format|
       if @subscription.save
-        format.html { redirect_to @subscription, notice: 'Subscription was successfully created.' }
-        format.json { render :show, status: :created, location: @subscription }
+        flash[:success] = 'Subscription was successfully created.'
+        format.html { redirect_to @subscription }
       else
         format.html { render :new }
         format.json { render json: @subscription.errors, status: :unprocessable_entity }
@@ -66,7 +66,7 @@ class SubscriptionsController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_subscription
-    @subscription = Subscription.find(params[:id])
+    @subscription = Subscription.includes(:plan).find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

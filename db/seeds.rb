@@ -15,6 +15,8 @@ plan_3 = Plan.where(plan_type: 'enterprise', monthly_price: 60.00,
                     no_of_users: 20, unlimited_boards: true,
                     annual_price: 55.00, additional_user: 6.00).first_or_create
 
-20.times do |i|
-  User.create!(email: 'user'+i.to_s+'@plato.com', password: '123123', password_confirmation: '123123')
+if User.all.count < 20
+  20.times do |i|
+    User.create!(email: 'user'+i.to_s+'@plato.com', password: '123123', password_confirmation: '123123')
+  end
 end
