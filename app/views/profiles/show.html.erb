@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-lg-6">
+    <div class="bio-row">
+      <p><span>Email </span>: <%= @user.email %> </p>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <% if @active_subscriptions.count > 0 %>
+        <a href="#projectForm" data-toggle="modal" class="btn  btn-primary">
+          Create Project
+        </a>
+        <%= render partial: 'shared/project_form', locals: {project: Project.new, creator: @user} %>
+    <% else %>
+        <div class="bio-graph-heading">
+          You've no active subscriptions for creating projects. Please <%= link_to 'Subscribe', new_subscription_path %> to
+          create projects. Unlimited projects can be managed by updating to "Startup" or "Enterprise" plan.
+        </div>
+    <% end %>
+  </div>
+</div>

@@ -8,6 +8,8 @@ class Subscription < ApplicationRecord
   before_save :check_if_subscription_exists
   after_create :create_project, if: -> (subscription){subscription.plan.plan_type == 'solo' }
 
+  scope :not_expired, -> { where("start_date <= ? AND end_date >= ?", DateTime.now, DateTime.now)}
+
   private
   def set_expiray_and_cost
     self.start_date = DateTime.now

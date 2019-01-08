@@ -1,8 +1,17 @@
 <div class="row m-bot20">
   <div class="col-lg-6">
-    <%= link_to 'Edit', edit_organization_path(@organization) %> |
-    <%= link_to 'Back', organizations_path %>
+    <%= link_to 'Edit', edit_organization_path(@organization), class: 'btn btn-success btn-xs' %> |
+    <%= link_to 'Back', organizations_path, class: 'btn btn-danger btn-xs' %>
   </div>
+
+  <% if @active_subscriptions.count > 0 %>
+      <div class="col-lg-6 text-right">
+        <a href="#projectForm" data-toggle="modal" class="btn  btn-primary">
+          Create Project
+        </a>
+      </div>
+      <%= render partial: 'shared/project_form', locals: {project: Project.new, creator: @organization} %>
+  <% end %>
 </div>
 
 <div class="row">
@@ -74,5 +83,3 @@
     </section>
   </div>
 </div>
-
-

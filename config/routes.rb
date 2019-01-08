@@ -11,7 +11,8 @@ Rails.application.routes.draw do
 
   resources :subscriptions, except: [:update, :destroy, :edit]
 
-  resources :projects
+  resources :projects, except: [:new, :edit]
+  resources :profiles, only: [:show]
 
   root 'dashboard#index'
 

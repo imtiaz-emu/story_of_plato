@@ -1,0 +1,25 @@
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="projectForm" class="modal fade" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">
+          <%= project.new_record? ? 'Create Project' : 'Edit Project' %>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <%= form_with(model: project, local: true) do |f| %>
+          <div class="form-group">
+            <label class="sr-only" for="exampleInputEmail2">Project Name</label>
+            <%= f.text_field :name, class: "form-control ", id: "exampleInputEmail5", placeholder: "Project Name", required: true %>
+          </div>
+          <%= f.hidden_field :creator_id, value: creator.id %>
+          <%= f.hidden_field :creator_type, value: creator.class %>
+          <button type="submit" class="btn btn-success">Create</button>
+        <% end %>
+
+      </div>
+
+    </div>
+  </div>
+</div>

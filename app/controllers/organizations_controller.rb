@@ -15,6 +15,8 @@ class OrganizationsController < ApplicationController
   def show
     @owner = @organization.owner
     @org_users = @organization.users
+    @active_subscriptions = @organization.subscriptions.not_expired.includes(:plan)
+                                .map{|sub| sub if ['startup', 'enterprise'].include?(sub.plan.plan_type)}.compact
   end
 
   # GET /organizations/new
