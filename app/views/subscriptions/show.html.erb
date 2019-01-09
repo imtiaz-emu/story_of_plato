@@ -29,7 +29,7 @@
               <h4>
                 <p>Started: <%= @subscription.start_date.strftime('%m/%d/%Y') %></p>
                 <p>Expired: <%= @subscription.end_date.strftime('%m/%d/%Y') %></p>
-                <p>Cost: <%= @subscription.total_cost %></p>
+                <p>Cost: $<%= @subscription.total_cost %></p>
               </h4>
             </div>
           </div>

@@ -16,7 +16,7 @@ class Project < ApplicationRecord
     if subscription
       self.users << user
       if subscription.plan.no_of_users < self.users.count
-        subscription.update_attribute(:total_cost, (subscription.plan.additional_user + subscription.total_cost))
+        subscription.update_column(:total_cost, subscription.plan.additional_user + subscription.total_cost)
       end
     end
   end
