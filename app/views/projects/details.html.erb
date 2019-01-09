@@ -11,7 +11,7 @@
             </div>
             <div class="col-lg-4 col-sm-4 follow-info">
               <blockquote>
-                <p>Project Owner: <%= @project.creator.is_a?(Organization) ? @project.creator.name : @project.creator.email %></p>
+                <p>Project Owner: <%= project_creator(@project) %></p>
               </blockquote>
             </div>
           </div>

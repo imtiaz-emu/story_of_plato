@@ -23,15 +23,16 @@ class Subscription < ApplicationRecord
   end
 
   def check_if_subscription_exists
-    if self.plan_subscriber.is_a?(Organization) && self.plan_subscriber.subscriptions.count > 0
-      errors.add(:base, "You've already bought a subscription for this organization!")
+    plans = Plan.other_than_solo.pluck(:id)
+    if self.plan_subscriber.subscriptions.where('plan_id IN (?)', plans).includes(:plan).map{|sub| sub.plan.plan_type}.include?(self.plan.plan_type)
+      errors.add(:base, "You've already bought a subscription of package #{self.plan.plan_type} for this organization!")
       throw(:abort)
     end
   end
 
   def create_project
     project = self.plan_subscriber.projects.create(name: 'Default Project')
-    self.project << project
+    self.update_attribute(:project_id, project.id)
   end
 
 end

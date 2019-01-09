@@ -8,4 +8,8 @@ module ApplicationHelper
     Plan.active
   end
 
+  def project_creator(project)
+    return project.creator.is_a?(Organization) ? project.creator.name : project.creator.email
+  end
+
 end

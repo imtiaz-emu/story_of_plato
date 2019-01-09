@@ -1,12 +1,12 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:details, :users, :cards, :update, :destroy]
+  before_action :set_project, only: [:details, :users, :cards, :update, :destroy, :add_user]
 
   layout 'dashboard'
 
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    @projects = current_user.projects
   end
 
   # GET /projects/1
@@ -26,20 +26,14 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def users
-    @project_users = @project.creator.projects.map {|p| p.users}.compact.uniq
-    if Plan.find_by_plan_type('solo').subscriptions.not_expired.map {|sub| sub.project}.compact.include?(@project)
+    @project_users = @project.users
+    plans = Plan.other_than_solo.pluck(:id)
+    begin
+      subscription = @project.creator.subscriptions.not_expired.where('plan_id IN (?)', plans).includes(:plan).last
+      @can_add_user = subscription ? true : false
+    rescue
       @can_add_user = false
     end
-
-    if Plan.where('plan_type != ?', 'solo').map{|p| p.subscriptions.not_expired}.compact.map {|sub| sub.project}.compact.include?(@project)
-      @can_add_user = true
-    end
-
-    # if @project.creator.is_a?(Organization)
-    #   @project.creator.subscriptions.not_expired.includes(:plan).last.plan.no_of_users
-    # else
-    #   @project.creator.subscriptions.not_expired.includes(:plan)
-    # end
   end
 
   # POST /projects
@@ -78,6 +72,21 @@ class ProjectsController < ApplicationController
       format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def add_user
+    user = User.find_by_email(params[:email])
+    if user
+      if @project.users.include?(user)
+        flash[:info] = 'User already exists!'
+      else
+        @project.add_user(user)
+        flash[:success] = "User successfully added!"
+      end
+    else
+      flash[:info] = "No user found with email #{params[:email]}."
+    end
+    redirect_to users_project_path(@project)
   end
 
   private
