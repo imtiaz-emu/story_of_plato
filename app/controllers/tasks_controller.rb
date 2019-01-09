@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:update]
   before_action :set_card
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 

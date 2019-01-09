@@ -1,6 +1,6 @@
 <div class="col-md-4">
   <div class="panel">
-    <div class="panel-heading panel-default-card">
+    <div class="panel-heading <%= card_color(card) %>">
       <%= card.title %>
       <%= link_to edit_project_card_path(card.project, card), class: 'pull-right' , remote: true do %>
           <i class="fa fa-pencil-square"></i>

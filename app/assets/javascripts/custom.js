@@ -12,11 +12,11 @@ $(document).on('turbolinks:load', function() {
 
     $(".task-detail").click(function () {
         var url = $(this).attr("data-url");
-        // console.log(url);
+        console.log(url);
         $.ajax({
             dataType: "script",
             type: "GET",
             url: url
         });
-    })
+    });
 });

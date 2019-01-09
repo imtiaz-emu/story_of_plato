@@ -6,12 +6,28 @@
       <div class="activity-body act-in">
         <div class="text">
           <p class="attribution">
-            <input type="checkbox" <%= task.completed ? 'checked' : '' %> />
+            <input class="task-status" type="checkbox" <%= task.completed ? 'checked' : '' %> data-url="<%= project_card_task_path(card.project, card, task) %>" />
             <span class="task-detail" data-url="<%= edit_project_card_task_path(card.project, card, task) %>">
               <%= task.detail %>
             </span>
+            <%= link_to project_card_task_path(card.project, card, task), class: 'pull-right', method: :delete , remote: true do %>
+                <i class="fa fa-times"></i>
+            <% end %>
           </p>
         </div>
       </div>
     </div>
 <% end %>
+
+<script>
+  $(".attribution input").click(function () {
+    var url = $(this).attr("data-url");
+    console.log(url);
+    $.ajax({
+      dataType: "script",
+      type: "PUT",
+      url: url,
+      data: {task: {completed: $(this).is(':checked')}}
+    });
+  })
+</script>

@@ -1,1 +1,1 @@
-$("#task-form").html("<%=j render partial: 'tasks/form', locals: {task: @task, card: @task.card}  %>");
+$("#card-<%= @task.card.id %> #task-form").html("<%=j render partial: 'tasks/form', locals: {task: @task, card: @task.card}  %>");

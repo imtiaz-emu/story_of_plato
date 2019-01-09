@@ -1,0 +1,11 @@
+$("#card-<%= @card.id %> #card-tasks").html("<%=j render partial: 'tasks/tasks', locals: {tasks: @tasks, card: @card} %>");
+
+<% if @tasks.count > 0 %>
+  <% if @tasks.count == @tasks.completed.count %>
+    $("#card-<%= @card.id %> .panel-heading").removeClass("panel-partial-task panel-default-card").addClass("panel-card-completed");
+  <% else %>
+    $("#card-<%= @card.id %> .panel-heading").removeClass("panel-card-completed panel-default-card").addClass("panel-partial-task");
+  <% end %>
+<% else %>
+  $("#card-<%= @card.id %> .panel-heading").removeClass("panel-card-completed panel-partial-task").addClass("panel-default-card");
+<% end %>
