@@ -62,7 +62,7 @@
               <td><%= link_to org.id, organization_path(org) %></td>
               <td><%= org.name %></td>
               <td><%= truncate(org.try(:description) || "", :length => 50) %></td>
-              <td>4</td>
+              <td><%= org.users.count + 1 %></td>
               <td><%= link_to 'Show', org %></td>
             </tr>
         <% end %>

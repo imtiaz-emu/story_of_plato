@@ -8,7 +8,7 @@ class SubscriptionsController < ApplicationController
   def index
     @user_subscriptions = current_user.subscriptions
     @org_subscriptions = Subscription.where(plan_subscriber_type: 'Organization').includes(:plan_subscriber, :plan)
-                             .map {|sub| sub if sub.plan_subscriber.created_by == current_user.id}
+                             .map {|sub| sub if sub.plan_subscriber.created_by == current_user.id}.compact
   end
 
   # GET /subscriptions/1

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
       get :details
       get :cards
       post :add_user
-      post :remove_user
+      delete "remove_user/:user_id", action: 'remove_user'
     end
   end
 

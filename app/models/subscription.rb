@@ -24,8 +24,8 @@ class Subscription < ApplicationRecord
 
   def check_if_subscription_exists
     plans = Plan.other_than_solo.pluck(:id)
-    if self.plan_subscriber.subscriptions.where('plan_id IN (?)', plans).includes(:plan).map{|sub| sub.plan.plan_type}.include?(self.plan.plan_type)
-      errors.add(:base, "You've already bought a subscription of package #{self.plan.plan_type} for this organization!")
+    if self.plan_subscriber.subscriptions.where('plan_id IN (?)', plans).count > 0
+      errors.add(:base, "You've already bought a subscription of package for this organization!")
       throw(:abort)
     end
   end

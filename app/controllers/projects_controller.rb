@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:details, :users, :cards, :update, :destroy, :add_user]
+  before_action :set_project, only: [:details, :users, :cards, :update, :destroy, :add_user, :remove_user]
 
   layout 'dashboard'
 
@@ -85,6 +85,18 @@ class ProjectsController < ApplicationController
       end
     else
       flash[:info] = "No user found with email #{params[:email]}."
+    end
+    redirect_to users_project_path(@project)
+  end
+
+  def remove_user
+    user = User.find(params[:user_id])
+    project_creator = @project.creator.is_a?(Organization) ? @project.creator.owner : @project.creator
+    if project_creator == user
+      flash[:info] = 'Cannot delete Project creator'
+    else
+      @project.users.delete(user)
+      flash[:success] = "User successfully removed!"
     end
     redirect_to users_project_path(@project)
   end

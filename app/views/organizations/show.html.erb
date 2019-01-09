@@ -4,7 +4,7 @@
     <%= link_to 'Back', organizations_path, class: 'btn btn-danger btn-xs' %>
   </div>
 
-  <% if @active_subscriptions.count > 0 %>
+  <% if @active_subscriptions.count > 0 && current_user == @organization.owner %>
       <div class="col-lg-6 text-right">
         <a href="#projectForm" data-toggle="modal" class="btn  btn-primary">
           Create Project
@@ -62,20 +62,17 @@
         <tr>
           <th>#</th>
           <th>Email</th>
-          <th>Number of Projects</th>
         </tr>
         </thead>
         <tbody>
         <tr>
           <td><%= @owner.id %></td>
           <td>*<%= @owner.email %></td>
-          <td>2</td>
         </tr>
         <% @org_users.each do |user| %>
             <tr>
               <td><%= user.id %></td>
               <td><%= user.email %></td>
-              <td>2</td>
             </tr>
         <% end %>
         </tbody>
