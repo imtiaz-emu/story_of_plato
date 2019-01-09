@@ -16,6 +16,7 @@ class Project < ApplicationRecord
     if subscription
       self.users << user
       if subscription.plan.no_of_users < self.users.count
+        self.project_users.find_by_user_id(user.id).update(additional_user: true, start_date: DateTime.now, end_date: DateTime.now + 1.months)
         subscription.update_column(:total_cost, subscription.plan.additional_user + subscription.total_cost)
       end
     end
