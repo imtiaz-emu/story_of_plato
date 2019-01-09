@@ -1,0 +1,12 @@
+<div class="row">
+  <div id="cardlist">
+    <%= render partial: 'cards/cards', locals: {cards: @cards} %>
+  </div>
+  <div class="col-md-4">
+    <%= link_to new_project_card_path(@project), class: 'btn btn-primary', remote: true do %>
+        <i class="fa fa-plus"></i> Add Card
+    <% end %>
+  </div>
+</div>
+
+<div id="cardEditCreateForm"></div>

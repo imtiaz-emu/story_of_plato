@@ -14,8 +14,10 @@
               <% end %>
             </li>
             <li>
-              <strong><%= project_creator(project)  %></strong>
-              <span><%= project.creator.class %></span>
+              <%= link_to project_cards_path(project) do %>
+                  <strong><%= project.cards.count %></strong>
+                  <span>cards</span>
+              <% end %>
             </li>
           </ul>
         </div><!--/social-box-->

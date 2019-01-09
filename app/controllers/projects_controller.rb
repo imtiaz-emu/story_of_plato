@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:details, :users, :cards, :update, :destroy, :add_user, :remove_user]
+  before_action :check_subscription, only: [:details, :users, :cards]
 
   layout 'dashboard'
 
@@ -110,5 +111,12 @@ class ProjectsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def project_params
     params.require(:project).permit(:name, :creator_id, :creator_type)
+  end
+
+  def check_subscription
+    if @project.creator.subscriptions.not_expired.count == 0
+      flash[:notice] = "Subscription for accessing this project is expired!"
+      redirect_to subscriptions_path
+    end
   end
 end

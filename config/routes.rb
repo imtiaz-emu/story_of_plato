@@ -12,10 +12,10 @@ Rails.application.routes.draw do
   resources :subscriptions, except: [:update, :destroy, :edit]
 
   resources :projects, except: [:new, :edit, :show] do
+    resources :cards
     member do
       get :users
       get :details
-      get :cards
       post :add_user
       delete "remove_user/:user_id", action: 'remove_user'
     end

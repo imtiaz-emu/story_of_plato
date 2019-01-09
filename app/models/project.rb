@@ -2,6 +2,7 @@ class Project < ApplicationRecord
 
   belongs_to :creator, polymorphic: true
   has_many :subscriptions
+  has_many :cards, :dependent => :destroy
   has_many :project_users
   has_many :users, through: :project_users
 

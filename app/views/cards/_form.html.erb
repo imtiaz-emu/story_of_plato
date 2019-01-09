@@ -1,0 +1,28 @@
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="cardForm" class="modal fade" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+        <h4 class="modal-title">
+          <%= card.new_record? ? 'Create Card' : 'Edit Card' %>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for([project, card], remote: true) do |f| %>
+            <div class="form-group">
+              <label class="sr-only" for="exampleInputEmail2">Card Name</label>
+              <%= f.text_field :title, class: "form-control ", id: "exampleInputEmail5", placeholder: "Card Name", required: true %>
+            </div>
+
+            <div class="form-group">
+              <label class="sr-only" for="exampleInputEmail2">Card Description</label>
+              <%= f.text_area :description, rows: '4', class: 'form-control', id: 'inputDesc', placeholder: "Card description" %>
+            </div>
+            <button type="submit" class="btn btn-success"><%= card.new_record? ? 'Create' : 'Update' %></button>
+        <% end %>
+
+      </div>
+
+    </div>
+  </div>
+</div>

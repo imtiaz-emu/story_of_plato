@@ -1,11 +1,33 @@
-.login-img3-body .alert{
+.login-img3-body .alert {
     margin-bottom: 0;
 }
-.login-img3-body .login-form{
+
+.login-img3-body .login-form {
     margin: 150px auto 0;
 }
+
 .alert-notice {
     background-color: #dff8e3;
     border-color: #caf4ca;
     color: #4cd964;
+}
+
+.panel.panel-default-card {
+    border-color: #0000FF;
+    background: #0000FF;
+    color: #ffffff;
+}
+.panel.panel-partial-task {
+    border-color: #FF3333;
+    background: #FF3333;
+    color: #000;
+}
+.panel.panel-card-completed {
+    border-color: #3CFF33;
+    background: #3CFF33;
+    color: #284315;
+}
+#cardlist .panel .panel-heading i{
+    border: none;
+    margin: 0 auto;
 }
