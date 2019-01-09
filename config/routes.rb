@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   resources :subscriptions, except: [:update, :destroy, :edit]
 
   resources :projects, except: [:new, :edit, :show] do
-    resources :cards
+    resources :cards do
+      resources :tasks
+    end
     member do
       get :users
       get :details

@@ -12,17 +12,17 @@
     color: #4cd964;
 }
 
-.panel.panel-default-card {
+.panel-heading.panel-default-card {
     border-color: #0000FF;
     background: #0000FF;
     color: #ffffff;
 }
-.panel.panel-partial-task {
+.panel-heading.panel-partial-task {
     border-color: #FF3333;
     background: #FF3333;
     color: #000;
 }
-.panel.panel-card-completed {
+.panel-heading.panel-card-completed {
     border-color: #3CFF33;
     background: #3CFF33;
     color: #284315;
@@ -30,4 +30,17 @@
 #cardlist .panel .panel-heading i{
     border: none;
     margin: 0 auto;
+}
+.panel-heading a{
+    color: #fff;
+}
+.act-time .act-in .text{
+    border: none;
+    padding: 0px;
+}
+.act-time .act-in .text input{
+    margin-right: 10px;
+}
+.act-time{
+    padding: 0px;
 }

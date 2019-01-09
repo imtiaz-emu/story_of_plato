@@ -1,0 +1,17 @@
+<div id="task-form">
+  <%= render partial: 'tasks/form', locals: {task: Task.new, card: card} %>
+</div>
+<% tasks.each do |task| %>
+    <div class="act-time">
+      <div class="activity-body act-in">
+        <div class="text">
+          <p class="attribution">
+            <input type="checkbox" <%= task.completed ? 'checked' : '' %> />
+            <span class="task-detail" data-url="<%= edit_project_card_task_path(card.project, card, task) %>">
+              <%= task.detail %>
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+<% end %>

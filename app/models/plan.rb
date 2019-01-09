@@ -4,6 +4,6 @@ class Plan < ApplicationRecord
 
   scope :active, -> { where('active = (?)', true) }
   scope :inactive, -> { where('active = (?)', false) }
-  scope :other_than_solo, -> { where("plan_type IN (?)", ['startup', 'enterprise', 'business'])}
+  scope :other_than_solo, -> { where("plan_type IN (?) AND active = (?)", ['startup', 'enterprise', 'business'], true)}
 
 end

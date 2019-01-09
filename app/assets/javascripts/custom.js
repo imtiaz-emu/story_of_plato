@@ -9,4 +9,14 @@ $(document).on('turbolinks:load', function() {
     $('#radio-enterprise').click(function(){
         $('#radio-04').attr('disabled', false);
     });
+
+    $(".task-detail").click(function () {
+        var url = $(this).attr("data-url");
+        // console.log(url);
+        $.ajax({
+            dataType: "script",
+            type: "GET",
+            url: url
+        });
+    })
 });

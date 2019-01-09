@@ -1,0 +1,6 @@
+<%= form_for([card.project, card, task], html: {class: 'form-inline'}, remote: true) do |f| %>
+    <div class="form-group">
+      <%= f.text_field :detail, class: 'form-control', placeholder: "Task Detail", maxlength: 288, size: 35 %>
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm"><%= task.new_record? ? 'Add' : 'Save' %></button>
+<% end %>

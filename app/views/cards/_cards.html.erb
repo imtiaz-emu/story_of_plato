@@ -1,16 +1,5 @@
 <% cards.each do |card| %>
-    <div class="col-md-4">
-      <div class="panel panel-success">
-        <div class="panel-heading">
-          <%= card.title %>
-          <%= link_to edit_project_card_path(card.project, card), class: 'pull-right' , remote: true do %>
-            <i class="fa fa-pencil-square"></i>
-          <% end %>
-          <%= link_to project_card_path(card.project, card), class: 'pull-right', method: :delete , remote: true do %>
-              <i class="fa fa-trash-o"></i>
-          <% end %>
-        </div>
-        <div class="panel-content"><%= card.description %></div>
-      </div>
+    <div id="card-<%= card.id %>">
+      <%= render partial: 'cards/card', locals: {card: card} %>
     </div>
 <% end %>
