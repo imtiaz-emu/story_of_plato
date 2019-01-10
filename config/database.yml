@@ -1,0 +1,29 @@
+default: &default
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+  username: postgres
+  password: admin
+  host: localhost
+
+development:
+  <<: *default
+  database: plato_development
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: plato_test
+
+staging:
+  <<: *default
+  database: plato_staging
+  username: <%= ENV['PLATO_DATABASE_USERNAME'] %>
+  password: <%= ENV['PLATO_DATABASE_PASSWORD'] %>
+
+production:
+  database: plato
+  username: plato
+  password: <%= ENV['PLATO_DATABASE_PASSWORD'] %>
