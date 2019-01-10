@@ -10,23 +10,40 @@ class Subscription < ApplicationRecord
 
   scope :not_expired, -> { where("start_date <= ? AND end_date >= ?", DateTime.now, DateTime.now)}
 
-  private
-  def set_expiray_and_cost
+
+  def update_cost(prev_sub)
     self.start_date = DateTime.now
     if self.duration_type == 'Annually'
       self.duration = self.duration * 12
-      self.total_cost = self.duration * self.plan.annual_price
+      self.total_cost = prev_sub.total_cost + self.duration * self.plan.annual_price
     else
-      self.total_cost = self.duration * self.plan.monthly_price
+      self.total_cost = prev_sub.total_cost + self.duration * self.plan.monthly_price
     end
     self.end_date = DateTime.now + self.duration.months
+    self.save(validate: false)
+  end
+
+  private
+  def set_expiray_and_cost
+    if self.new_record?
+      self.start_date = DateTime.now
+      if self.duration_type == 'Annually'
+        self.duration = self.duration * 12
+        self.total_cost = self.duration * self.plan.annual_price
+      else
+        self.total_cost = self.duration * self.plan.monthly_price
+      end
+      self.end_date = DateTime.now + self.duration.months
+    end
   end
 
   def check_if_subscription_exists
-    plans = Plan.other_than_solo.pluck(:id)
-    if self.plan_subscriber.subscriptions.where('plan_id IN (?)', plans).count > 0
-      errors.add(:base, "You've already bought a subscription of package for this organization!")
-      throw(:abort)
+    if self.new_record?
+      plans = Plan.other_than_solo.pluck(:id)
+      if self.plan_subscriber.subscriptions.where('plan_id IN (?)', plans).count > 0
+        errors.add(:base, "You've already bought a subscription of package for this organization!")
+        throw(:abort)
+      end
     end
   end
 

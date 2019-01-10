@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:details, :users, :cards, :update, :destroy, :add_user, :remove_user]
   before_action :check_subscription, only: [:details, :users, :cards]
+  before_action :check_user_subscription, only: [:details, :users, :cards]
 
   layout 'dashboard'
 
@@ -117,6 +118,16 @@ class ProjectsController < ApplicationController
     if @project.creator.subscriptions.not_expired.count == 0
       flash[:notice] = "Subscription for accessing this project is expired!"
       redirect_to subscriptions_path
+    end
+  end
+
+  def check_user_subscription
+    project_user = current_user.project_users.find_by_project_id(@project.id)
+    if project_user.additional_user
+      unless project_user.start_date <= DateTime.now && project_user.end_date >= DateTime.now
+        flash[:notice] = "Your subscription for accessing this project is expired!"
+        redirect_to projects_path
+      end
     end
   end
 end

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :subscriptions, except: [:update, :destroy, :edit]
+  resources :subscriptions, except: [:destroy]
 
   resources :projects, except: [:new, :edit, :show] do
     resources :cards do

@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <section class="panel">
       <header class="panel-heading">
-        New Subscription
+        <%= @subscription.new_record? ? 'New' : 'Edit' %> Subscription
       </header>
       <div class="panel-body">
         <%= form_with(model: subscription, local: true) do |f| %>
@@ -13,15 +13,29 @@
               <p><b>Manage Subscriptions for User/Organization</b></p>
 
               <%= f.label :plan_subscriber_type do %>
-                  <%= f.radio_button :plan_subscriber_type, 'User', id: "radio-01", value: 'User', checked: true %> <%= current_user.email %>
+                  <%= f.radio_button :plan_subscriber_type, 'User', id: "radio-01",
+                                     value: 'User', checked: true,
+                                     :disabled => check_subscriber(subscription)
+                  %>
+                  <%= current_user.email %>
               <% end %>
               <% if current_user_organizations.count > 0 %>
                   <%= f.label :plan_subscriber_type do %>
-                      <%= f.radio_button :plan_subscriber_type, 'Organization', id: "radio-02", value: 'Organization' %>
+                      <%= f.radio_button :plan_subscriber_type, 'Organization',
+                                         id: "radio-02", value: 'Organization',
+                                         :disabled => check_subscriber(subscription)
+                      %>
                       Organization
                   <% end %>
                   <p>Select subscriber organization</p>
-                  <%= f.select :plan_subscriber_id, options_for_select(current_user_organizations.collect { |org| [org.name, org.id] }, :selected => subscription.plan_subscriber_id), :class => "form-control" %>
+                  <% if subscription.new_record? %>
+                  <%= f.select :plan_subscriber_id,
+                               options_for_select(current_user_organizations.collect { |org| [org.name, org.id] },
+                                                  :selected => subscription.plan_subscriber_id),
+                               :class => "form-control" %>
+                  <% else %>
+                    <%= subscription.plan_subscriber.name %>
+                  <% end %>
               <% end %>
             </div>
 
@@ -31,7 +45,12 @@
                 <% active_plans.each do |plan| %>
                     <div class="col-md-3">
                       <%= f.label :plan_id do %>
-                          <%= f.radio_button :plan_id, "#{plan.id}", id: "radio-#{plan.plan_type}", value: "#{plan.id}", :checked => subscription.plan_id.present? ? subscription.plan_id == plan.id : true %> <%= plan.plan_type.capitalize %>
+                          <%= f.radio_button :plan_id, "#{plan.id}", id: "radio-#{plan.plan_type}",
+                                             value: "#{plan.id}",
+                                             :checked => check_subscription(subscription, plan.id),
+                                             :disabled => disable_select_plan(subscription, plan.id)
+                          %>
+                          <%= plan.plan_type.capitalize %>
                       <% end %>
 
                       <blockquote>

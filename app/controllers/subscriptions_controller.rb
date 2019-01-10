@@ -1,5 +1,6 @@
 class SubscriptionsController < ApplicationController
   before_action :set_subscription, only: [:show, :edit, :update, :destroy]
+  before_action :check_expiary, only: [:edit, :update]
 
   layout 'dashboard'
 
@@ -14,6 +15,7 @@ class SubscriptionsController < ApplicationController
   # GET /subscriptions/1
   # GET /subscriptions/1.json
   def show
+    @subscription.start_date <= DateTime.now && @subscription.end_date >= DateTime.now ? @expired = false : @expired = true
   end
 
   # GET /subscriptions/new
@@ -44,8 +46,10 @@ class SubscriptionsController < ApplicationController
   # PATCH/PUT /subscriptions/1
   # PATCH/PUT /subscriptions/1.json
   def update
+    previous_subscription = @subscription
     respond_to do |format|
       if @subscription.update(subscription_params)
+        @subscription.update_cost(previous_subscription)
         format.html { redirect_to @subscription, notice: 'Subscription was successfully updated.' }
         format.json { render :show, status: :ok, location: @subscription }
       else
@@ -74,5 +78,9 @@ class SubscriptionsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def subscription_params
     params.require(:subscription).permit(:plan_subscriber_id, :plan_subscriber_type, :plan_id, :duration_type, :duration)
+  end
+
+  def check_expiary
+
   end
 end

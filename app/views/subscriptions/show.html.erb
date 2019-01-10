@@ -39,4 +39,7 @@
   </div>
 </div>
 
-<%= link_to 'Back', subscriptions_path %>
+<% if @expired %>
+    <%= link_to 'Edit', edit_subscription_path(@subscription), class: 'btn btn-success btn-xs' %> |
+<% end %>
+<%= link_to 'Back', subscriptions_path, class: 'btn btn-danger btn-xs' %>
