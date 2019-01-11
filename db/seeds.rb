@@ -23,7 +23,7 @@ end
 
 
 if ENV['upgraded']
-  # Plan.update_all(active: false)
+  Plan.update_all(active: false)
   plan_1 = Plan.where(plan_type: 'solo', monthly_price: 3.00).first_or_create
   plan_2 = Plan.where(plan_type: 'startup', monthly_price: 20.00,
                       no_of_users: 5, unlimited_boards: true,
