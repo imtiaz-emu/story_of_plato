@@ -20,3 +20,19 @@ if User.all.count < 20
     User.create!(email: 'user'+i.to_s+'@plato.com', password: '123123', password_confirmation: '123123')
   end
 end
+
+
+if ENV['upgraded']
+  # Plan.update_all(active: false)
+  plan_1 = Plan.where(plan_type: 'solo', monthly_price: 3.00).first_or_create
+  plan_2 = Plan.where(plan_type: 'startup', monthly_price: 20.00,
+                      no_of_users: 5, unlimited_boards: true,
+                      annual_price: 18.00, additional_user: 7.00).first_or_create
+  plan_3 = Plan.where(plan_type: 'business', monthly_price: 35.00,
+                      no_of_users: 10, unlimited_boards: true,
+                      annual_price: 32.00, additional_user: 6.00).first_or_create
+  plan_4 = Plan.where(plan_type: 'enterprise', monthly_price: 60.00,
+                      no_of_users: 50, unlimited_boards: true,
+                      annual_price: 55.00, additional_user: 4.00).first_or_create
+
+end
